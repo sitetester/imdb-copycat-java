@@ -22,7 +22,7 @@ public class TitleCrewImporter {
                 .map(lineData -> new TitlesCrew(lineData[0], lineData[1], lineData[2]))
                 .collect(Collectors.toList());
 
-        data.subList(0, 14).parallelStream().forEach(titlesCrewRepository::save);
+        data.parallelStream().forEach(titlesCrewRepository::save);
     }
 
 }

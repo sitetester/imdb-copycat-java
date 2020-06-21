@@ -14,14 +14,14 @@ public class TitleRatingsImporter {
 
         String DATA_FILE_NAME = "data/title_ratings.csv";
 
-        var data =  Files.lines(ImportHelper.getPath(DATA_FILE_NAME))
+        var data = Files.lines(ImportHelper.getPath(DATA_FILE_NAME))
                 .skip(1)
                 .parallel()
                 .map(line -> line.split("\t"))
                 .map(lineData -> new TitleRatings(lineData[0], lineData[1], Integer.parseInt(lineData[2])))
                 .collect(Collectors.toList());
 
-        data.subList(0, 14).parallelStream().forEach(titleRatingsRepository::save);
+        data.parallelStream().forEach(titleRatingsRepository::save);
 
     }
 }

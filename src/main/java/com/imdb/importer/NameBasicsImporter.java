@@ -21,6 +21,6 @@ public class NameBasicsImporter {
                 .map(lineData -> new NameBasics(lineData[0], lineData[1], lineData[2], lineData[3], lineData[4], lineData[5]))
                 .collect(Collectors.toList());
 
-        data.subList(0, 14).parallelStream().forEach(nameBasicsRepository::save);
+        data.parallelStream().forEach(nameBasicsRepository::save);
     }
 }
