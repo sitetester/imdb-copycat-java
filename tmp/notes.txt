@@ -1,0 +1,9 @@
+- To set mysql timezone issue for Spring Boot
+
+1.
+nano /usr/local/etc/my.cnf
+[mysqld]
+default-time-zone='+00:00
+
+2.
+brew services restart mysql
