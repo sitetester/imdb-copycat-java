@@ -10,7 +10,6 @@ public class TitleBasics {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
     String tconst;
     String titleType;
     String primaryTitle;
@@ -20,4 +19,31 @@ public class TitleBasics {
     String endYear;
     String runtimeMinutes;
     String genres;
+
+
+    protected TitleBasics() {
+    }
+
+    public TitleBasics(
+            String tconst,
+            String titleType,
+            String primaryTitle,
+            String originalTitle,
+            String isAdult,
+            String startYear,
+            String endYear,
+            String runtimeMinutes,
+            String genres) {
+
+        this.tconst = tconst;
+        this.titleType = titleType;
+        this.primaryTitle = primaryTitle;
+        this.originalTitle = originalTitle;
+        this.isAdult = isAdult;
+        this.startYear = startYear;
+        this.endYear = endYear;
+        this.runtimeMinutes = runtimeMinutes;
+        this.genres = genres;
+    }
+
 }

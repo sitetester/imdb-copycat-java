@@ -7,12 +7,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.stream.Collectors;
 
-public class TitleRatingsImporter {
+public class TitleRatingsImporter extends AbstractImporter {
+
+    private final TitleRatingsRepository titleRatingsRepository;
+
+    public TitleRatingsImporter(TitleRatingsRepository titleRatingsRepository) {
+        this.titleRatingsRepository = titleRatingsRepository;
+    }
 
     // https://stackoverflow.com/questions/25436026/parallelstream-for-files
-    public void loadData(TitleRatingsRepository titleRatingsRepository) throws IOException {
+    public void loadData() throws IOException {
 
-        String DATA_FILE_NAME = "data/title_ratings.csv";
+        System.out.println("Importing TitleRatings data...");
+        String DATA_FILE_NAME = "data/title_ratings.tsv";
 
         var data = Files.lines(ImportHelper.getPath(DATA_FILE_NAME))
                 .skip(1)
@@ -21,7 +28,15 @@ public class TitleRatingsImporter {
                 .map(lineData -> new TitleRatings(lineData[0], lineData[1], Integer.parseInt(lineData[2])))
                 .collect(Collectors.toList());
 
-        data.parallelStream().forEach(titleRatingsRepository::save);
+        data.forEach(titleRatingsRepository::save);
+        System.out.println("DONE - TitleRatings data");
+    }
 
+    public void run() {
+        try {
+            loadData();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
 }

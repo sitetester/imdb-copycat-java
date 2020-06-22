@@ -11,7 +11,11 @@ public class TitlesCrew {
     private Long id;
 
     String tconst;
+
+    @Column(columnDefinition = "TEXT")
     String directors;
+
+    @Column(columnDefinition = "TEXT")
     String writers;
 
     protected TitlesCrew() {
@@ -22,5 +26,16 @@ public class TitlesCrew {
         this.tconst = tconst;
         this.directors = directors;
         this.writers = writers;
+    }
+
+
+    @Override
+    public String toString() {
+        return "TitlesCrew{" +
+                "id=" + id +
+                ", tconst='" + tconst + '\'' +
+                ", directors='" + directors + '\'' +
+                ", writers='" + writers + '\'' +
+                '}';
     }
 }
