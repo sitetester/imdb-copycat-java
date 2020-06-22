@@ -22,20 +22,16 @@ public class TitleBasicsImporter extends AbstractImporter {
         System.out.println("Importing TitleBasics data...");
         String DATA_FILE_NAME = "data/title_basics.tsv";
 
-        var count = 0;
-        reader = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(ImportHelper.getPath(DATA_FILE_NAME))), encoding));
-        for (String line; (line = reader.readLine()) != null; ) {
-            count += 1;
 
-            if (count > 1) {
-                var lineData = line.split("\t");
-                titleBasicsRepository.save(
-                        new TitleBasics(lineData[0],
-                                lineData[1], lineData[2], lineData[3], lineData[4],
-                                lineData[5], lineData[6], lineData[7], lineData[8])
-                );
-            }
-        }
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(ImportHelper.getPath(DATA_FILE_NAME))), encoding));
+        reader.lines().skip(1).forEach(line -> {
+            var lineData = line.split("\t");
+            titleBasicsRepository.save(
+                    new TitleBasics(lineData[0],
+                            lineData[1], lineData[2], lineData[3], lineData[4],
+                            lineData[5], lineData[6], lineData[7], lineData[8])
+            );
+        });
 
         System.out.println("DONE - TitleBasics data");
     }

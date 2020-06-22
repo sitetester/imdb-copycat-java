@@ -22,18 +22,13 @@ public class TitlePrincipalsImporter extends AbstractImporter {
         System.out.println("Importing TitlePrincipals data...");
         String DATA_FILE_NAME = "data/title_principals.tsv";
 
-        var count = 0;
         reader = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(ImportHelper.getPath(DATA_FILE_NAME))), encoding));
-        for (String line; (line = reader.readLine()) != null; ) {
-            count += 1;
-
-            if (count > 1) {
-                var lineData = line.split("\t");
-                titlePrincipalsRepository.save(
-                        new TitlePrincipals(lineData[0], lineData[1], lineData[2], lineData[3], lineData[4], lineData[5])
-                );
-            }
-        }
+        reader.lines().skip(1).forEach(line -> {
+            var lineData = line.split("\t");
+            titlePrincipalsRepository.save(
+                    new TitlePrincipals(lineData[0], lineData[1], lineData[2], lineData[3], lineData[4], lineData[5])
+            );
+        });
 
         System.out.println("DONE - TitlePrincipals data");
     }

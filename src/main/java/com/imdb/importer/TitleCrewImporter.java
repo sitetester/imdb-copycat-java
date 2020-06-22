@@ -22,18 +22,13 @@ public class TitleCrewImporter extends AbstractImporter {
         System.out.println("Importing TitleCrew data...");
         String DATA_FILE_NAME = "data/title_crew.tsv";
 
-        var count = 0;
         reader = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(ImportHelper.getPath(DATA_FILE_NAME))), encoding));
-        for (String line; (line = reader.readLine()) != null; ) {
-            count += 1;
-
-            if (count > 1) {
-                var lineData = line.split("\t");
-                titlesCrewRepository.save(
-                        new TitlesCrew(lineData[0], lineData[1], lineData[2])
-                );
-            }
-        }
+        reader.lines().skip(1).forEach(line -> {
+            var lineData = line.split("\t");
+            titlesCrewRepository.save(
+                    new TitlesCrew(lineData[0], lineData[1], lineData[2])
+            );
+        });
 
         System.out.println("DONE - TitleCrew data");
     }
