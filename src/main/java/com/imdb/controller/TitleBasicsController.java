@@ -21,8 +21,13 @@ public class TitleBasicsController {
         this.titleBasicsRepository = titleBasicsRepository;
     }
 
-    @GetMapping("/{title}")
-    Optional<TitleBasics> findByOriginalTitle(@PathVariable("title") String title) {
+    @GetMapping("/title/{title}")
+    Optional<TitleBasics> byOriginalTitle(@PathVariable("title") String title) {
         return titleBasicsRepository.findByOriginalTitle(title);
+    }
+
+    @GetMapping("/genere/{genere}")
+    Optional<TitleBasics> byGenres(@PathVariable("genere") String genere) {
+        return titleBasicsRepository.findByGenres(genere);
     }
 }

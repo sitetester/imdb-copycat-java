@@ -11,5 +11,7 @@ public interface TitleBasicsRepository extends CrudRepository<TitleBasics, Long>
 
     Optional<TitleBasics> findByOriginalTitle(String originalTitle);
 
+    Optional<TitleBasics> findByGenres(String genres);
+
 
 }
