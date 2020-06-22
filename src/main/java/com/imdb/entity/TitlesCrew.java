@@ -29,6 +29,42 @@ public class TitlesCrew {
     }
 
 
+    public Long getId() {
+        return id;
+    }
+
+    public TitlesCrew setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getTconst() {
+        return tconst;
+    }
+
+    public TitlesCrew setTconst(String tconst) {
+        this.tconst = tconst;
+        return this;
+    }
+
+    public String getDirectors() {
+        return directors;
+    }
+
+    public TitlesCrew setDirectors(String directors) {
+        this.directors = directors;
+        return this;
+    }
+
+    public String getWriters() {
+        return writers;
+    }
+
+    public TitlesCrew setWriters(String writers) {
+        this.writers = writers;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "TitlesCrew{" +
