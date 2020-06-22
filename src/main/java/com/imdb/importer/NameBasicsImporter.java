@@ -3,9 +3,10 @@ package com.imdb.importer;
 import com.imdb.entity.NameBasics;
 import com.imdb.repository.NameBasicsRepository;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.stream.Collectors;
+import java.io.InputStreamReader;
 
 public class NameBasicsImporter extends AbstractImporter {
 
@@ -21,14 +22,19 @@ public class NameBasicsImporter extends AbstractImporter {
         System.out.println("Importing NameBasics data...");
         String DATA_FILE_NAME = "data/name_basics.tsv";
 
-        var data = Files.lines(ImportHelper.getPath(DATA_FILE_NAME))
-                .skip(1)
-                .parallel()
-                .map(line -> line.split("\t"))
-                .map(lineData -> new NameBasics(lineData[0], lineData[1], lineData[2], lineData[3], lineData[4], lineData[5]))
-                .collect(Collectors.toList());
+        var count = 0;
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(ImportHelper.getPath(DATA_FILE_NAME))), encoding));
+        for (String line; (line = reader.readLine()) != null; ) {
+            count += 1;
 
-        data.forEach(nameBasicsRepository::save);
+            if (count > 1) {
+                var lineData = line.split("\t");
+                nameBasicsRepository.save(
+                        new NameBasics(lineData[0], lineData[1], lineData[2], lineData[3], lineData[4], lineData[5])
+                );
+            }
+        }
+
         System.out.println("DONE - NameBasics data");
     }
 

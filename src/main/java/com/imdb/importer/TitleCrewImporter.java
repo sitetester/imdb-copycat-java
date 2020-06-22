@@ -3,9 +3,10 @@ package com.imdb.importer;
 import com.imdb.entity.TitlesCrew;
 import com.imdb.repository.TitlesCrewRepository;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.stream.Collectors;
+import java.io.InputStreamReader;
 
 public class TitleCrewImporter extends AbstractImporter {
 
@@ -20,16 +21,20 @@ public class TitleCrewImporter extends AbstractImporter {
 
         System.out.println("Importing TitleCrew data...");
         String DATA_FILE_NAME = "data/title_crew.tsv";
-        ;
 
-        var data = Files.lines(ImportHelper.getPath(DATA_FILE_NAME))
-                .skip(1)
-                .parallel()
-                .map(line -> line.split("\t"))
-                .map(lineData -> new TitlesCrew(lineData[0], lineData[1], lineData[2]))
-                .collect(Collectors.toList());
+        var count = 0;
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream(String.valueOf(ImportHelper.getPath(DATA_FILE_NAME))), encoding));
+        for (String line; (line = reader.readLine()) != null; ) {
+            count += 1;
 
-        data.forEach(titlesCrewRepository::save);
+            if (count > 1) {
+                var lineData = line.split("\t");
+                titlesCrewRepository.save(
+                        new TitlesCrew(lineData[0], lineData[1], lineData[2])
+                );
+            }
+        }
+
         System.out.println("DONE - TitleCrew data");
     }
 
